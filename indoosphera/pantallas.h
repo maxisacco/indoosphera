@@ -12,16 +12,9 @@
 #include <stddef.h>
 #include "pantalla.h"
 #include "EtiquetaR.h"
+#include <Time/Time.h>
 
 
-
-/*******************************************/
-/***   Esquema Menues                    ***/
-/*******************************************/
-
-
-//TouchScreenMenu confHora = TouchScreenMenu(confHoraItems, 2, 10, 10, CENTERJ, "Configuracion");
-//TouchScreenMenu confDesarrollo = TouchScreenMenu(confDesarrolloItems, 2, 10, 10, CENTERJ, "Configuracion");
 
 
 
@@ -35,26 +28,11 @@
 /****** Definicion de Menues ***************/
 
 TouchScreenMenuItem informacionItems[] = {
-  TouchScreenMenuItem("ENDOFMENU")
+		TouchScreenMenuItem("ENDOFMENU"),
 };
 /****** Funcion Acciones del Menu ***************/
 
-pantalla * informacionAccion(pantalla * este,TouchScreenMenuItem * item ){
-	pantalla *res;
-		if(!strcmp(item->getText(),"<-Atras")){
-				res = este->getAnterior();
-				TSC.clearScreen();
-				res->dibujar();
-		}
-	for (int i=0; i< este->getBotonesLen();i++)
-		if(este->getBotones()[i].process()){
-			res = este->getAnterior();
-			TSC.clearScreen();
-			res->dibujar();
-		 }
-
-	return res;
-}
+pantalla * informacionAccion(pantalla * este,TouchScreenMenuItem * item ) {return este;}
 
 
 /****** Definicion de Pantalla ***************/
@@ -65,7 +43,7 @@ TouchScreenMenu informacion = TouchScreenMenu(informacionItems, 2, 10, 10, CENTE
 
 /****** Definicion de Botones ***************/
 TouchScreenArea informacionBotones[] = {                                             // x       y                    w    h
-	TouchScreenButton("Atras", TSC.createColor(255, 0,0 ), TSC.createColor(0, 0, 0), 10, TSC.getScreenHeight()-50 , 2, 10),
+	TouchScreenButton("Atras", TSC.createColor(255, 0,0 ), TSC.createColor(0, 0, 0), 10, TSC.getScreenHeight()-40 , 2, 10),
 //	TouchScreenButton("Listo", TSC.createColor(0, 255, 0 ), TSC.createColor(0, 0, 0), 5+TSC.getScreenWidth()/2, TSC.getScreenHeight()-50 , 2, 10),
 };
 
@@ -85,13 +63,23 @@ pantalla * informacionAccionBotones(pantalla * este){
 return res;
 }
 
-/****** Definicion de EtiquetasR ************/
-
-EtiquetaR informacionEtiquetasR[] = {};
-
 /****** Definicion de labels************/
 
-TouchScreenLabel informacionLables[]={};
+TouchScreenLabel informacionLabels[]={
+TouchScreenLabel("Hora:", TSC.createColor(0, 255, 255), TSC.createColor(0, 255, 255), 0, 60, 2, 0, false),
+TouchScreenLabel("--", TSC.createColor(0, 255, 255), TSC.createColor(0, 255, 255), 0, 60, 2, 0, false),
+TouchScreenLabel("ºC:", TSC.createColor(0, 255, 255), TSC.createColor(255, 255, 255), 0, 95, 2, 0, false),
+TouchScreenLabel("Humedad:", TSC.createColor(0, 255, 255), TSC.createColor(0, 255, 0), 0, 130, 2, 0, false),
+TouchScreenLabel("Tiempo:", TSC.createColor(0, 255, 255), TSC.createColor(255, 255, 255), 0, 165, 2, 0, false),
+TouchScreenLabel("Altura:", TSC.createColor(0, 255, 255), TSC.createColor(255, 255, 255), 0, 200, 2, 0, false),
+TouchScreenLabel("Periodo:", TSC.createColor(0, 255, 255), TSC.createColor(255, 255, 0), 0, 235, 2, 0, false),
+};
+
+/****** Definicion de EtiquetasR ************/
+
+EtiquetaR informacionEtiquetasR[] = {
+		EtiquetaR(&informacionLabels[1]),
+};
 
 pantalla Informacion (NULL,
 					informacionItems,
@@ -102,8 +90,8 @@ pantalla Informacion (NULL,
 					informacionAccionBotones,
 					informacionEtiquetasR,
 					sizeof(informacionEtiquetasR)/sizeof(informacionEtiquetasR[0]),
-					informacionLables,
-					sizeof(informacionLables)/sizeof(informacionLables[0]));
+					informacionLabels,
+					sizeof(informacionLabels)/sizeof(informacionLabels[0]));
 
 
 /*******************************************/
@@ -264,3 +252,20 @@ pantalla Principal (NULL,
 					sizeof(principalEtiquetasR)/sizeof(principalEtiquetasR[0]),
 					principalLables,
 					sizeof(principalLables)/sizeof(principalLables[0]));
+
+
+
+
+
+
+
+
+
+/*******************************************/
+/***   Enlace de Menus (Atras)           ***/
+/*******************************************/
+
+void pantallaInit(void){
+Configuracion.setAnterior(&Principal);
+Informacion.setAnterior(&Principal);
+}

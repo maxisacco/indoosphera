@@ -29,8 +29,7 @@ See the readme.txt file for information on find the libraries this library uses.
 #include <WString.h>
 #include <stddef.h>
 #include "indoosphera.h"
-#include "Clock.h"
-#include <TimerOne.h>
+#include <Time/Time.h>
 #include "pantalla.h"
 #include "pantallas.h"
 
@@ -65,8 +64,7 @@ void setup(void) {
 //	Timer1.attachInterrupt(atenderInter,1000000);
 	TSC.setBackColor(TSC.createColor(0, 0, 0)); // change the default background color
 	TSC.init(); // make sure everything get initialized
-	Configuracion.setAnterior(&Principal);
-	Informacion.setAnterior(&Principal);
+	pantallaInit();
 //  btn7.setValue(.5); // change the value on one of the sliders
 //  btn7.setPadding(5); // change the padding on one of the sliders
 //  btn8.setValue(.75); // change the value on one of the sliders

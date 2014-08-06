@@ -32,9 +32,9 @@
 			<locationURI>ArduinoPivateLibPath/TFT</locationURI>
 		</link>
 		<link>
-			<name>Libraries/TimerOne</name>
+			<name>Libraries/Time</name>
 			<type>2</type>
-			<locationURI>ArduinoPivateLibPath/TimerOne</locationURI>
+			<locationURI>ArduinoPivateLibPath/Time</locationURI>
 		</link>
 		<link>
 			<name>Libraries/TouchScreen</name>

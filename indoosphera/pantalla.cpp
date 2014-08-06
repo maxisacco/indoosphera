@@ -54,12 +54,15 @@ pantalla::pantalla(pantalla * ant,
 pantalla::~pantalla(void){}
 void pantalla::refrescar(void){
 	if (this->refrescable)
-		this->dibujar();
+		for(int i=0 ; i < this->etiquetasRLen; i++)
+				this->etiquetasR[i].refrescar();
 }
 void pantalla::dibujar(void){
 	pantallaActual->draw();
 	for( int i=0; i<botonesLen; i++)
 		botones[i].draw();
+	for( int i=0; i<labelLen; i++)
+		label[i].draw();
 }
 
 
