@@ -29,15 +29,15 @@
 /***   Pantalla Informacion            ***/
 /*******************************************/
 
+#define INFORMACION_ANTERIOR NULL
+
+
+/****** Definicion de Menues ***************/
+
 TouchScreenMenuItem informacionItems[] = {
   TouchScreenMenuItem("ENDOFMENU")
 };
-TouchScreenMenu _informacion = TouchScreenMenu(informacionItems, 2, 10, 10, CENTERJ, "Informacion");
-TouchScreenArea informacionBotones[] = {                                             // x       y                    w    h
-	TouchScreenButton("Atras", TSC.createColor(255, 0,0 ), TSC.createColor(0, 0, 0), 10, TSC.getScreenHeight()-50 , 2, 10),
-//	TouchScreenButton("Listo", TSC.createColor(0, 255, 0 ), TSC.createColor(0, 0, 0), 5+TSC.getScreenWidth()/2, TSC.getScreenHeight()-50 , 2, 10),
-};
-
+/****** Funcion Acciones del Menu ***************/
 
 pantalla * informacionAccion(pantalla * este,TouchScreenMenuItem * item ){
 	pantalla *res;
@@ -46,8 +46,8 @@ pantalla * informacionAccion(pantalla * este,TouchScreenMenuItem * item ){
 				TSC.clearScreen();
 				res->dibujar();
 		}
-	for (int i=0; i< este->botonesLen;i++)
-		if(este->botones[i].process()){
+	for (int i=0; i< este->getBotonesLen();i++)
+		if(este->getBotones()[i].process()){
 			res = este->getAnterior();
 			TSC.clearScreen();
 			res->dibujar();
@@ -56,17 +56,64 @@ pantalla * informacionAccion(pantalla * este,TouchScreenMenuItem * item ){
 	return res;
 }
 
-pantalla Informacion(NULL,
+
+/****** Definicion de Pantalla ***************/
+
+
+TouchScreenMenu informacion = TouchScreenMenu(informacionItems, 2, 10, 10, CENTERJ, "Informacion");
+
+
+/****** Definicion de Botones ***************/
+TouchScreenArea informacionBotones[] = {                                             // x       y                    w    h
+	TouchScreenButton("Atras", TSC.createColor(255, 0,0 ), TSC.createColor(0, 0, 0), 10, TSC.getScreenHeight()-50 , 2, 10),
+//	TouchScreenButton("Listo", TSC.createColor(0, 255, 0 ), TSC.createColor(0, 0, 0), 5+TSC.getScreenWidth()/2, TSC.getScreenHeight()-50 , 2, 10),
+};
+
+
+
+/****** Funcion Acciones de Botones **********/
+
+pantalla * informacionAccionBotones(pantalla * este){
+	pantalla *res=este;
+	for (int i=0 ; i< este->getBotonesLen();i++)
+		if (i==0 && este->getBotones()[i].process()){
+			res=este->getAnterior();
+			TSC.clearScreen();
+			res->dibujar();
+		}
+
+return res;
+}
+
+/****** Definicion de EtiquetasR ************/
+
+EtiquetaR informacionEtiquetasR[] = {};
+
+/****** Definicion de labels************/
+
+TouchScreenLabel informacionLables[]={};
+
+pantalla Informacion (NULL,
 					informacionItems,
 					informacionAccion,
-					&_informacion,
+					&informacion,
 					informacionBotones,
-					sizeof(informacionBotones)/sizeof(informacionBotones[0]));
+					sizeof(informacionBotones)/sizeof(informacionBotones[0]),
+					informacionAccionBotones,
+					informacionEtiquetasR,
+					sizeof(informacionEtiquetasR)/sizeof(informacionEtiquetasR[0]),
+					informacionLables,
+					sizeof(informacionLables)/sizeof(informacionLables[0]));
 
 
 /*******************************************/
 /***   Pantalla Configuracion           ***/
 /*******************************************/
+
+#define CONFIGURACION_ANTERIOR NULL
+
+
+/****** Definicion de Menues ***************/
 
 TouchScreenMenuItem configuracionItems[] = {
 		TouchScreenMenuItem("Hora"),
@@ -75,11 +122,8 @@ TouchScreenMenuItem configuracionItems[] = {
 		TouchScreenMenuItem("ENDOFMENU")
 };
 
-TouchScreenArea configuracionBotones[] = {
-		TouchScreenButton("Atras", TSC.createColor(255, 0,0 ), TSC.createColor(0, 0, 0), 10, TSC.getScreenHeight()-50 , 2, 10),
-	//	TouchScreenButton("Listo", TSC.createColor(0, 255, 0 ), TSC.createColor(0, 0, 0), 5+TSC.getScreenWidth()/2, TSC.getScreenHeight()-50 , 2, 10),
-};
-TouchScreenMenu configuracion = TouchScreenMenu(configuracionItems, 2, 10, 10, CENTERJ, "Configuracion");
+
+/****** Funcion Acciones del Menu ***************/
 
 pantalla * configuracionAccion(pantalla * este,TouchScreenMenuItem * item ){
 	pantalla *res;
@@ -101,31 +145,76 @@ pantalla * configuracionAccion(pantalla * este,TouchScreenMenuItem * item ){
 return res;
 }
 
+
+/****** Definicion de Pantalla ***************/
+
+TouchScreenMenu configuracion = TouchScreenMenu(configuracionItems, 2, 10, 10, CENTERJ, "Configuracion");
+
+/****** Definicion de Botones ***************/
+TouchScreenArea configuracionBotones[] = {
+		TouchScreenButton("Atras", TSC.createColor(255, 0,0 ), TSC.createColor(0, 0, 0), 10, TSC.getScreenHeight()-50 , 2, 10),
+	//	TouchScreenButton("Listo", TSC.createColor(0, 255, 0 ), TSC.createColor(0, 0, 0), 5+TSC.getScreenWidth()/2, TSC.getScreenHeight()-50 , 2, 10),
+};
+
+
+
+/****** Funcion Acciones de Botones **********/
+
+pantalla * configuracionAccionBotones(pantalla * este){
+	pantalla *res=este;
+	for (int i=0 ; i< este->getBotonesLen();i++)
+		if (i==0 && este->getBotones()[i].process()){
+			res=este->getAnterior();
+			TSC.clearScreen();
+			res->dibujar();
+		}
+
+	return res;
+}
+
+/****** Definicion de EtiquetasR ************/
+
+EtiquetaR configuracionEtiquetasR[] = {};
+
+/****** Definicion de labels************/
+
+TouchScreenLabel configuracionLables[]={};
+
 pantalla Configuracion (NULL,
-						configuracionItems,
-						configuracionAccion,
-						&configuracion,
-						configuracionBotones,
-						sizeof(configuracionBotones)/sizeof(configuracionBotones[0]));
+					configuracionItems,
+					configuracionAccion,
+					&configuracion,
+					configuracionBotones,
+					sizeof(configuracionBotones)/sizeof(configuracionBotones[0]),
+					configuracionAccionBotones,
+					configuracionEtiquetasR,
+					sizeof(configuracionEtiquetasR)/sizeof(configuracionEtiquetasR[0]),
+					configuracionLables,
+					sizeof(configuracionLables)/sizeof(configuracionLables[0]));
+
+
+
+
 
 
 /*******************************************/
 /***   Pantalla principal                ***/
 /*******************************************/
 
-//pantalla Principal();
+#define PRINCIPAL_ANTERIOR NULL
+
+
+/****** Definicion de Menues ***************/
+
 TouchScreenMenuItem principalItems[] = {
   TouchScreenMenuItem("Informacion"),
   TouchScreenMenuItem("Configuracion"),
   TouchScreenMenuItem("ENDOFMENU")
 };
-TouchScreenMenu principal = TouchScreenMenu(principalItems, 2, 10, 10, CENTERJ, "Indoosphera");
-TouchScreenArea principalBotones[] = {
-//		TouchScreenButton("Atras", TSC.createColor(255, 0,0 ), TSC.createColor(0, 0, 0), 10, TSC.getScreenHeight()-50 , 2, 10),
-//		TouchScreenButton("Listo", TSC.createColor(0, 255, 0 ), TSC.createColor(0, 0, 0), 5+TSC.getScreenWidth()/2, TSC.getScreenHeight()-50 , 2, 10),
-};
 
-pantalla * accionPrincipal(pantalla * este,TouchScreenMenuItem * item ){
+/****** Funcion Acciones del Menu ***************/
+
+pantalla * principalAccion(pantalla * este,TouchScreenMenuItem * item ){
 	pantalla *res;
 		if(!strcmp(item->getText(),"Configuracion")){
 				res = &Configuracion;
@@ -140,10 +229,38 @@ pantalla * accionPrincipal(pantalla * este,TouchScreenMenuItem * item ){
 	return res;
 }
 
+/****** Definicion de Pantalla ***************/
+
+TouchScreenMenu principal = TouchScreenMenu(principalItems, 2, 10, 10, CENTERJ, "Indoosphera");
+
+/****** Definicion de Botones ***************/
+TouchScreenArea principalBotones[] = {
+//		TouchScreenButton("Atras", TSC.createColor(255, 0,0 ), TSC.createColor(0, 0, 0), 10, TSC.getScreenHeight()-50 , 2, 10),
+//		TouchScreenButton("Listo", TSC.createColor(0, 255, 0 ), TSC.createColor(0, 0, 0), 5+TSC.getScreenWidth()/2, TSC.getScreenHeight()-50 , 2, 10),
+};
+
+
+
+/****** Funcion Acciones de Botones **********/
+
+pantalla * principalAccionBotones(pantalla * este){return este;}
+
+/****** Definicion de EtiquetasR ************/
+
+EtiquetaR principalEtiquetasR[] = {};
+
+/****** Definicion de labels************/
+
+TouchScreenLabel principalLables[]={};
+
 pantalla Principal (NULL,
 					principalItems,
-					accionPrincipal,
+					principalAccion,
 					&principal,
 					principalBotones,
-					sizeof(principalBotones)/sizeof(principalBotones[0]));
-//pantalla Principal (NULL,principalItems,accionPrincipal,&principal,NULL,2);
+					sizeof(principalBotones)/sizeof(principalBotones[0]),
+					principalAccionBotones,
+					principalEtiquetasR,
+					sizeof(principalEtiquetasR)/sizeof(principalEtiquetasR[0]),
+					principalLables,
+					sizeof(principalLables)/sizeof(principalLables[0]));

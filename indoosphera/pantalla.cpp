@@ -22,6 +22,10 @@ pantalla::pantalla (void){
 	botonesLen=0;
 	refrescable=false;
 	accionBoton=NULL;
+	this->etiquetasR=NULL;
+	this->etiquetasRLen=0;
+	this->label = NULL;
+	this->labelLen=0;
 }
 pantalla::pantalla(pantalla * ant,
 					TouchScreenMenuItem * Items,
@@ -30,16 +34,22 @@ pantalla::pantalla(pantalla * ant,
 					TouchScreenArea * boton,
 					int botonLen,
 					pantalla * (*aBoton)(pantalla * este),
-					bool refresh){
+					EtiquetaR * etiqR,
+					int etiqRLen,
+					TouchScreenLabel * lbl,
+					int lblLen){
 		anterior=ant;
 		menuItems=Items;
 		accion=pf;
 		pantallaActual=actual;
 		botones=boton;
 		botonesLen=botonLen;
-		refrescable=refresh;
 		accionBoton=aBoton;
-
+		this->etiquetasR=etiqR;
+		this->etiquetasRLen=etiqRLen;
+		this->label=lbl;
+		this->labelLen=lblLen;
+		refrescable=(etiqRLen!=0);
 }
 pantalla::~pantalla(void){}
 void pantalla::refrescar(void){
@@ -65,11 +75,17 @@ void pantalla::setAnterior( pantalla* anterior) {
 
 
 pantalla* pantalla::ejecutar(void){
-	pantalla *res=this;
 	TouchScreenMenuItem *item = this->pantallaActual->process(false);
 	if (item != NULL)
 		return accion(this,item);
-	return res;
+
+
+	return this->accionBoton(this);
+
 }
 
-bool pantalla::gerRefrescable(void){return this->refrescable;}
+bool pantalla::getRefrescable(void){return this->refrescable;}
+int pantalla::getBotonesLen(void){
+	return this->botonesLen;
+}
+TouchScreenArea * pantalla::getBotones(void){return this->botones;}

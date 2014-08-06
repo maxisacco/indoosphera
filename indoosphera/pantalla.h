@@ -4,7 +4,7 @@
  *  Created on: 03/08/2014
  *      Author: msacco
  */
-
+#include "EtiquetaR.h"
 #ifndef PANTALLA_H_
 #define PANTALLA_H_
 
@@ -24,8 +24,6 @@ private:
 	int labelLen;
 
 public:
-	TouchScreenArea * botones;
-	int botonesLen;
 	pantalla(void);
 	pantalla(pantalla * ant,             // puntero a pantalla anterior en el arbol de menues
 			TouchScreenMenuItem * Items, // puntero a arreglo con los Item de este menu
@@ -34,7 +32,7 @@ public:
 			TouchScreenArea * boton,
 			int botonLen,
 			pantalla * (*aBoton)(pantalla * este),
-			EtiquetaR * etiquetasR,
+			EtiquetaR * etiqR,
 			int etiqRLen,
 			TouchScreenLabel * lbl,
 			int lblLen);   // puntero a arreglo de botones
@@ -44,7 +42,9 @@ public:
 	pantalla *ejecutar(void);
 	pantalla*& getAnterior() ;
 	void setAnterior( pantalla* anterior);
-	bool gerRefrescable(void);
+	bool getRefrescable(void);
+	int getBotonesLen(void);
+	TouchScreenArea * getBotones(void);
 };
 
 #endif /* PANTALLA_H_ */
