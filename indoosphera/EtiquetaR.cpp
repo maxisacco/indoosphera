@@ -14,33 +14,42 @@ EtiquetaR::EtiquetaR(TouchScreenLabel * lbl){
 	this->valorChar=NULL;
 	this->etiqueta=lbl;
 	this->_refrescar=false;
+	this->cadena[0]='\0';
+	this->etiqueta->setText(this->cadena);
 }
 void EtiquetaR::setValor(int valor){
 	if (this->valorInt!=valor){
 		this->valorInt=valor;
+		unsigned int colorFore=this->etiqueta->getForeColor();
+		this->etiqueta->setForeColor(this->etiqueta->getBackColor());
+		this->etiqueta->draw();
 		((String)valor).toCharArray(cadena,CADENALONG);
-		this->etiqueta->setText(cadena);
-		this->_refrescar=true;
-	} else
-		this->_refrescar=false;
+		this->etiqueta->setForeColor(colorFore);
+		this->etiqueta->draw();
+	}
 }
 
 void EtiquetaR::setValor(float valor){
 	if (this->valorFloat!=valor){
 		this->valorFloat=valor;
+		unsigned int colorFore=this->etiqueta->getForeColor();
+		this->etiqueta->setForeColor(this->etiqueta->getBackColor());
+		this->etiqueta->draw();
 		((String)valor).toCharArray(cadena,CADENALONG);
-		this->etiqueta->setText(cadena);
-		this->_refrescar=true;
-	} else
-		this->_refrescar=false;
+		this->etiqueta->setForeColor(colorFore);
+		this->etiqueta->draw();
+	}
 }
 void EtiquetaR::setValor(char * valor){
-	if (strcmp(this->valorChar,valor)){
+	if (!strcmp(this->valorChar,valor)){
 		this->valorChar=valor;
-		this->etiqueta->setText(this->valorChar);
-		this->_refrescar=true;
-	} else
-		this->_refrescar=false;
+		unsigned int colorFore=this->etiqueta->getForeColor();
+		this->etiqueta->setForeColor(this->etiqueta->getBackColor());
+		this->etiqueta->draw();
+		strcpy(cadena,valorChar);
+		this->etiqueta->setForeColor(colorFore);
+		this->etiqueta->draw();
+	}
 }
 int EtiquetaR::getValorInt(void){
 	return this->valorInt;
@@ -50,9 +59,4 @@ float EtiquetaR::getValorFloat(void){
 }
 char* EtiquetaR::getValorChar(void){
 	return this->valorChar;
-}
-void EtiquetaR::refrescar(void){
-	if (this->_refrescar)
-		this->etiqueta->draw();
-
 }

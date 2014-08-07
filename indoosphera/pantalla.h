@@ -15,7 +15,6 @@ private:
 	TouchScreenMenu * pantallaActual;
 	pantalla * (*accion)(pantalla * este,TouchScreenMenuItem *);
 	pantalla * (*accionBoton)(pantalla * este);
-	bool refrescable;
 	TouchScreenArea * botones;
 	int botonesLen;
 	EtiquetaR * etiquetasR;
@@ -38,13 +37,20 @@ public:
 			int lblLen);   // puntero a arreglo de botones
 	virtual ~pantalla();
 	void dibujar(void);
-	void refrescar(void);
 	pantalla *ejecutar(void);
 	pantalla*& getAnterior() ;
 	void setAnterior( pantalla* anterior);
 	bool getRefrescable(void);
 	int getBotonesLen(void);
 	TouchScreenArea * getBotones(void);
+
+	EtiquetaR*  getEtiquetasR() {
+		return etiquetasR;
+	}
+
+	int getEtiquetasRLen() const {
+		return etiquetasRLen;
+	}
 };
 
 #endif /* PANTALLA_H_ */

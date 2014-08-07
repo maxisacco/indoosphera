@@ -33,7 +33,6 @@ public:
 	float getValorFloat(void);
 	char* getValorChar(void);
 	bool getRefrescar(void);
-	void refrescar(void);
 };
 
 #endif /* ETIQUETAR_H_ */

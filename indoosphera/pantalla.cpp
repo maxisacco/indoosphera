@@ -20,7 +20,6 @@ pantalla::pantalla (void){
 	pantallaActual=NULL;
 	botones=NULL;
 	botonesLen=0;
-	refrescable=false;
 	accionBoton=NULL;
 	this->etiquetasR=NULL;
 	this->etiquetasRLen=0;
@@ -49,14 +48,9 @@ pantalla::pantalla(pantalla * ant,
 		this->etiquetasRLen=etiqRLen;
 		this->label=lbl;
 		this->labelLen=lblLen;
-		refrescable=(etiqRLen!=0);
 }
 pantalla::~pantalla(void){}
-void pantalla::refrescar(void){
-	if (this->refrescable)
-		for(int i=0 ; i < this->etiquetasRLen; i++)
-				this->etiquetasR[i].refrescar();
-}
+
 void pantalla::dibujar(void){
 	pantallaActual->draw();
 	for( int i=0; i<botonesLen; i++)
@@ -87,7 +81,6 @@ pantalla* pantalla::ejecutar(void){
 
 }
 
-bool pantalla::getRefrescable(void){return this->refrescable;}
 int pantalla::getBotonesLen(void){
 	return this->botonesLen;
 }

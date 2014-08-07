@@ -59,10 +59,12 @@ pantalla *Activa=&Principal;
 //void atenderInter(void){
 //	reloj.tick();
 //}
+unsigned int backColor=TSC.createColor(0, 0, 0);
 void setup(void) {
 //	Timer1.initialize(1000000);
 //	Timer1.attachInterrupt(atenderInter,1000000);
-	TSC.setBackColor(TSC.createColor(0, 0, 0)); // change the default background color
+
+	TSC.setBackColor(backColor); // change the default background color
 	TSC.init(); // make sure everything get initialized
 	pantallaInit();
 //  btn7.setValue(.5); // change the value on one of the sliders
@@ -76,7 +78,7 @@ void setup(void) {
 void loop(void) {
   // handle the current menu
 	Activa=Activa->ejecutar();
-	Activa->refrescar();
+
 //  if(curMenu!=NULL){
 //    // process the current menu
 //    TouchScreenMenuItem *item = curMenu->process(false);
