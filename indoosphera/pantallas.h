@@ -67,7 +67,7 @@ return res;
 
 TouchScreenLabel informacionLabels[]={
 TouchScreenLabel("Hora:", TSC.createColor(0, 255, 255), TSC.createColor(0, 255, 255), 0, 60, 2, 0, false),
-TouchScreenLabel("--", TSC.createColor(0, 255, 255), TSC.createColor(0, 255, 255), 0, 60, 2, 0, false),
+TouchScreenLabel("--", TSC.createColor(0, 255, 255), TSC.createColor(0, 255, 255), 200, 60, 2, 0, false),
 TouchScreenLabel("ºC:", TSC.createColor(0, 255, 255), TSC.createColor(255, 255, 255), 0, 95, 2, 0, false),
 TouchScreenLabel("Humedad:", TSC.createColor(0, 255, 255), TSC.createColor(0, 255, 0), 0, 130, 2, 0, false),
 TouchScreenLabel("Tiempo:", TSC.createColor(0, 255, 255), TSC.createColor(255, 255, 255), 0, 165, 2, 0, false),
