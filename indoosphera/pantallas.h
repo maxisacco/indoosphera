@@ -46,10 +46,11 @@ TouchScreenMenu configuracionHora = TouchScreenMenu(configuracionHoraItems, 2, 1
 TouchScreenArea configuracionHoraBotones[] = {
 		TouchScreenButton("Atras", TSC.createColor(255, 0,0 ), TSC.createColor(0, 0, 0), 10, TSC.getScreenHeight()-50 , 2, 10),
 		TouchScreenButton("Listo", TSC.createColor(0, 255, 0 ), TSC.createColor(0, 0, 0), 5+TSC.getScreenWidth()/2, TSC.getScreenHeight()-50 , 2, 10),
-		TouchScreenArrowButton("+",TSC.createColor(255, 255, 255), TSC.createColor(255, 200, 0), 100, 75, 30, 30, UP),
-		TouchScreenArrowButton("-",TSC.createColor(255, 255, 255), TSC.createColor(255, 0, 255), 100, 115, 30, 50, DOWN),
-		TouchScreenArrowButton("+",TSC.createColor(255, 255, 255), TSC.createColor(0, 255, 255), 120, 75, 30, 70, UP),
-		TouchScreenArrowButton("-",TSC.createColor(255, 255, 255), TSC.createColor(255, 255, 255), 100, 115, 30, 90, DOWN),
+		TouchScreenArrowButton("+",TSC.createColor(255, 255, 255), TSC.createColor(0, 0, 255), 70, 65, 25, 25,UP),
+		TouchScreenArrowButton("-",TSC.createColor(255, 255, 255), TSC.createColor(0, 0, 255), 70, 120, 25, 25, DOWN),
+		TouchScreenArrowButton("+",TSC.createColor(255, 255, 255), TSC.createColor(0, 0, 255), 130, 65, 25, 25, UP),
+		TouchScreenArrowButton("-",TSC.createColor(255, 255, 255), TSC.createColor(0, 0, 255), 130, 120, 25, 25,DOWN),
+//		TouchScreenCircleButton("+",TSC.createColor(0, 0, 0), TSC.createColor(255, 255, 255), 10, 10, 70, 70),
 };
 
 
@@ -58,23 +59,61 @@ TouchScreenArea configuracionHoraBotones[] = {
 
 pantalla * configuracionHoraAccionBotones(pantalla * este){
 	pantalla *res=este;
-	for (int i=0 ; i< este->getBotonesLen();i++)
+	int min,hora;
+	for (int i=0 ; i< este->getBotonesLen();i++){
 		if (i==0 && este->getBotones()[i].process()){
 			res=este->getAnterior();
 			TSC.clearScreen();
 			res->dibujar();
 		}
+		else if (i==1 && este->getBotones()[i].process()){
+			setTime(este->getEtiquetasR()[0].getValorInt(),este->getEtiquetasR()[1].getValorInt(),0,7,8,2014);
+			res=este->getAnterior();
+			TSC.clearScreen();
+			res->dibujar();
+		}
+		else if (i==2 && este->getBotones()[i].process()){
+			hora=este->getEtiquetasR()[0].getValorInt();
+			hora++;
+			este->getEtiquetasR()[0].setValor(hora);
+		}
+		else if (i==3 && este->getBotones()[i].process()){
+			hora=este->getEtiquetasR()[0].getValorInt();
+			hora--;
+			este->getEtiquetasR()[0].setValor(hora);
+		}
+		else if (i==4 && este->getBotones()[i].process()){
+			min=este->getEtiquetasR()[1].getValorInt();
+			min++;
+			este->getEtiquetasR()[1].setValor(min);
+		}
+		else if (i==5 && este->getBotones()[i].process()){
+			min=este->getEtiquetasR()[1].getValorInt();
+			min--;
+			este->getEtiquetasR()[1].setValor(min);
+		}
+	}
 
 	return res;
 }
 
-/****** Definicion de EtiquetasR ************/
 
-EtiquetaR configuracionHoraEtiquetasR[] = {};
 
 /****** Definicion de labels************/
 
-TouchScreenLabel configuracionHoraLables[]={};
+TouchScreenLabel configuracionHoraLables[]={
+		TouchScreenLabel("88", 	TSC.createColor(0,	 255, 255), TSC.createColor(0, 0, 0),   60,  95, 3, 0, false),
+		TouchScreenLabel(":", 	TSC.createColor(0,	 255, 255), TSC.createColor(0, 0, 0),   105,  95, 3, 0, false),
+		TouchScreenLabel("88", 	TSC.createColor(0,	 255, 255), TSC.createColor(0, 0, 0),   120,  95, 3, 0, false),
+};
+
+/****** Definicion de EtiquetasR ************/
+
+EtiquetaR configuracionHoraEtiquetasR[] = {
+		EtiquetaR(&configuracionHoraLables[0]),
+		EtiquetaR(&configuracionHoraLables[2]),
+};
+
 
 pantalla ConfiguracionHora (NULL,
 					configuracionHoraItems,
@@ -127,9 +166,13 @@ TouchScreenArea informacionBotones[] = {                                        
 pantalla * informacionAccionBotones(pantalla * este){
 	pantalla *res=este;
 	for (int i=0; i< este->getEtiquetasRLen(); i++){
-	//	if (i==0){
-			este->getEtiquetasR()[i].setValor(second());
-	//	}
+		if (i==0){
+			este->getEtiquetasR()[i].setValor(hour());
+		}
+		else /*if (i==0) */{
+			este->getEtiquetasR()[i].setValor(minute());
+		}
+
 	}
 
 	for (int i=0 ; i< este->getBotonesLen();i++)
@@ -152,6 +195,8 @@ TouchScreenLabel("Humedad:",TSC.createColor(0, 	 255, 255), TSC.createColor(0, 0
 TouchScreenLabel("Tiempo:", TSC.createColor(0, 	 255, 255), TSC.createColor(0, 0, 0),   0, 165, 2, 0, false),
 TouchScreenLabel("Altura:", TSC.createColor(0, 	 255, 255), TSC.createColor(0, 0, 0),   0, 200, 2, 0, false),
 TouchScreenLabel("Periodo:",TSC.createColor(0, 	 255, 255), TSC.createColor(0, 0, 0),   0, 235, 2, 0, false),
+TouchScreenLabel("--", 		TSC.createColor(255, 255, 255), TSC.createColor(0, 0, 0), 160,  60, 2, 0, false),
+TouchScreenLabel(":", 		TSC.createColor(255, 255, 255), TSC.createColor(0, 0, 0), 190,  60, 2, 0, false),
 TouchScreenLabel("--", 		TSC.createColor(255, 255, 255), TSC.createColor(0, 0, 0), 200,  60, 2, 0, false),
 TouchScreenLabel("--", 		TSC.createColor(255, 255, 255), TSC.createColor(0, 0, 0), 200,  95, 2, 0, false),
 TouchScreenLabel("--", 		TSC.createColor(255, 255, 255), TSC.createColor(0, 0, 0), 200, 130, 2, 0, false),
@@ -164,11 +209,12 @@ TouchScreenLabel("--", 		TSC.createColor(255, 255, 255), TSC.createColor(0, 0, 0
 
 EtiquetaR informacionEtiquetasR[] = {
 		EtiquetaR(&informacionLabels[6]),
-		EtiquetaR(&informacionLabels[7]),
 		EtiquetaR(&informacionLabels[8]),
 		EtiquetaR(&informacionLabels[9]),
 		EtiquetaR(&informacionLabels[10]),
 		EtiquetaR(&informacionLabels[11]),
+		EtiquetaR(&informacionLabels[12]),
+		EtiquetaR(&informacionLabels[13]),
 };
 
 pantalla Informacion (NULL,
@@ -211,7 +257,7 @@ pantalla * configuracionAccion(pantalla * este,TouchScreenMenuItem * item ){
 				res->dibujar();
 		}
 		else if(!strcmp(item->getText(),"Hora")){
-			res = ConfiguracionHora;
+			res = &ConfiguracionHora;
 			TSC.clearScreen();
 			res->dibujar();
 		}
