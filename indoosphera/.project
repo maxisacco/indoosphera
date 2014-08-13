@@ -37,6 +37,11 @@
 			<locationURI>ArduinoPivateLibPath/Time</locationURI>
 		</link>
 		<link>
+			<name>Libraries/TimeAlarms</name>
+			<type>2</type>
+			<locationURI>ArduinoPivateLibPath/TimeAlarms</locationURI>
+		</link>
+		<link>
 			<name>Libraries/TouchScreen</name>
 			<type>2</type>
 			<locationURI>ArduinoPivateLibPath/TouchScreen</locationURI>
